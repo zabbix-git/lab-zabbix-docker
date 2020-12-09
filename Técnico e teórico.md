@@ -22,6 +22,9 @@ Documento referente aos procedimentos técnicos e teóricos executados no desafi
   - [4.2 Backend](#backend)
   - [4.3 Banco de Dados](#banco-de-dados)
 - [5 Monitorando YAML](#monitorando-yaml)
+  - [5.1 Arquivo YAML](#arquivo-yaml)
+  - [5.2 Criação dos itens](#criação-dos-itens)
+  - [5.3 Criação da trigger](#criação-da-trigger)
 - [6 Monitorando Apache HTTPD](#monitorando-apache-httpd)
 
 ## **Customizar Dockerfile**
@@ -119,9 +122,11 @@ Retorno desejado:
 
 ### **Criação do Template**
 Acessar interface Web do Zabbix para criação do Template - *(Configuração > Templates > Criar template)*.
-Definir:
+Aba **Template**
 - *Nome do template*: Template ODBC MySQL;
 - *Grupos*: Templates/Banco de Dados;
+
+Aba **Macros**
 - *Macros*
   - **{$MYSQL.USER}**: Usuário criado e configurado previamente no MySQL;
   - **{$MYSQL.PASSWORD}**: Senha do usuário.
@@ -129,7 +134,7 @@ Definir:
 
 ### **Criação de LLD**
 Após criar o template, acessá-lo e *(Regras de Descoberta > Criar regra de descoberta)*
-Definir:
+Aba **Regra de descoberta**
 - *Nome*: Descoberta de Tabelas
 - *Tipo*: monitoração de banco de dados
 - *Chave*: db.odbc.discovery[discovery.tables.DATABASE_NAME,{HOST.HOST}]
@@ -143,6 +148,7 @@ Definir:
 **Adicionar**
 
 Após criar a regra de descoberta, é preciso criar o protótipo do item. Para isso, acessar o template *(Regras de Descoberta > Protótipos de itens > Criar protótipo de item)*
+Aba **Protótipo de item**
 - *Nome*: [{#TABLE_NAME}] Size
 - *Tipo*: monitoração de banco de dados
 - *Chave*: db.odbc.select[{#TABLE_NAME}.size,{HOST.HOST}]
@@ -162,11 +168,13 @@ Após criar a regra de descoberta, é preciso criar o protótipo do item. Para i
 
 ### **Criação do Host**
 Acessar *(Configuração > Hosts > Criar host)*
+Aba **Host**
 - *Nome do host*: DSN_NAME
 - *Nome Visível*: Caso queira alterar
 - *Grupos*: Banco de Dados
 - *Monitorado por proxy*: Selecionar o proxy onde as configurações iniciais foram realizadas
 
+Aba **Templates**
 Por fim, associar o template no host e acompanhar a coleta dos dados.
 
 ## **Estruturando Demandas**
@@ -202,6 +210,72 @@ Validação através da comunicação com o Banco de Dados e a execução de sel
 Novamente a execução de selects predefinidos é importante, para validar o funcionamento. Adicionalmente, podemos acompanhar a saude do servidor e do banco de dados, rotinas de backup entre outras.
 
 ## **Monitorando YAML**
+
+### Arquivo YAML
+Criação do arquivo YAML no **Zabbix Server** em */tmp/app.yaml*, com o conteúdo abaixo:
+  ```
+    ```yaml
+    status: 'OK'
+    workers:
+    - online: 8
+    - offline: 1
+    connections:
+    - total: 87341
+    - success: 87320
+    - pending: 10
+    - failed: 11
+    ```
+  ```
+
+### Criação dos itens
+Aba **Item**
+Acessar o host **Zabbix Server** para criar o item de coleta: *(Configuração > Hosts > ZABBIX-SERVER > Itens > Criar item)*
+- *Nome*: App YAML
+- *Tipo*: Agente Zabbix (ativo)
+- *Chave*: vfs.file.contents[/tmp/app.yaml]
+- *Tipo de informação*: Texto
+- *Intervalo de atualização*: 3m
+- *Período de retenção do histórico*: De acordo com a necessidade
+- *Novo aplicação*: YAML
+**Detalhes**:
+- Por boa prática, utilizar números primos em *Intervalo de atualização* (evitando concorrência).
+**Adicionar**
+
+Seguir com a criação de um novo item, para tratar o retorno do anterior: *(Configuração > Hosts > ZABBIX-SERVER > Itens > Criar item)*
+Aba **Item**
+- *Nome*: App status
+- *Tipo*: Item dependente
+- *Chave*: vfs.file.contents[/tmp/app.yaml]
+- *Item mestre*: Selecionar o item criado anteriormente
+- *Tipo de informação*: Texto
+- *Período de retenção do histórico*: De acordo com a necessidade
+- *Novo aplicação*: YAML
+**Detalhes**:
+- Por boa prática, utilizar números primos em *Intervalo de atualização* (evitando concorrência).
+
+Aba **Pré-processamento**
+- *Nome*: Selecionar *Expressão regular*
+- *Parâmetros*
+  - *Padrão*: (\: )(')(.*)(')
+  - *Saída*: \3
+- *Custom on fail*: Set value to - 0
+**Adicionar**
+
+### Criação da trigger
+Acessar o host **Zabbix Server** para criar a trigger: *(Configuração > Hosts > ZABBIX-SERVER > Triggers > Criar trigger)*
+Aba **Trigger**
+- *Nome*: Definir como irá aparecer o alerta
+- *Severidade*: Definir de acordo com o cenário
+- *Expressão*: {ZABBIX-SERVER:app.status.str(OK)}=0
+- *Geração de eventos OK*: Depende do cenário
+- *Modo de geração de eventos de INCIDENTE*: Depende do cenário
+- *Fechamentos de eventos OK*: Depende do cenário
+- *Permitir fechamento manual*: Depende do cenário
+
+Aba **Etiquetas** - caso seja necessário
+- *Nome*: App
+- *Valor*: YAML
+**Adicionar**
 
 ## **Monitorando Apache**: *HTTPD*
 
