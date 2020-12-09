@@ -1,0 +1,11 @@
+```yaml
+status: 'OK'
+workers:
+- online: 8
+- offline: 1
+connections:
+- total: 87341
+- success: 87320
+- pending: 10
+- failed: 11
+```
