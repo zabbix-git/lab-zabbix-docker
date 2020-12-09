@@ -9,20 +9,20 @@ Documento referente aos procedimentos técnicos e teóricos executados no desafi
 - [1 Customizar Dockerfile](#customizar-dockerfile)
   - [1.1 Healthcheck: Zabbix Frontend](#healthcheck-zabbix-frontend)
   - [1.2 Pollers: Zabbix Server](#pollers-zabbix-server)
-  - [1.3 Feature: Alertscripts - Telegram]
-  - [1.4 Deploy Swarm]
-- [2 Monitorando MySQL (LLD + ODBC)]
-  - [2.1 Configurações e validações iniciais]
-  - [2.2 Criação do Template]
-  - [2.3 Criação de LLD]
-  - [2.4 Criação do Host]
-- [3 Estruturando Demandas]
-- [4 Aplicação WEB]
-  - [4.1 Frontend]
-  - [4.2 Backend]
-  - [4.3 Banco de Dados]
-- [5 Monitorando YAML]
-- [6 Monitorando Apache HTTPD]
+  - [1.3 Feature: Alertscripts - Telegram](#feature-alertscripts-telegram)
+  - [1.4 Deploy Swarm](#deploy-swarm)
+- [2 Monitorando MySQL (LLD + ODBC)](#monitorando-mysql)
+  - [2.1 Configurações e validações iniciais](#configurações-e-validações-iniciais)
+  - [2.2 Criação do Template](#criação-do-template)
+  - [2.3 Criação de LLD](#criação-de-lld)
+  - [2.4 Criação do Host](#criação-do-host)
+- [3 Estruturando Demandas](#estruturando-demandas)
+- [4 Aplicação WEB](#aplicação-web)
+  - [4.1 Frontend](#frontend)
+  - [4.2 Backend](#backend)
+  - [4.3 Banco de Dados](#banco-de-dados)
+- [5 Monitorando YAML](#monitorando-yaml)
+- [6 Monitorando Apache HTTPD](#monitorando-apache-httpd)
 
 ## **Customizar Dockerfile**
   
@@ -150,7 +150,7 @@ Após criar a regra de descoberta, é preciso criar o protótipo do item. Para i
 - *Senha*: {$MYSQL.PASSWORD}
 - *Pesquisa SQL*: SELECT round((data_length + index_length) / 1024) as 'size' FROM information_schema.tables WHERE table_schema = 'DATABASE_NAME' AND table_name = '{#TABLE_NAME}';
 - *Intervalo de atualização*: 7m
-- *Tipo de informação*: Númerico (fracionário)
+- *Tipo de informação*: Numérico (fracionário)
 - *Unidades*: B
 - *Período de retenção do histórico*: De acordo com a necessidade
 - *Período de retenção das estatísticas*: De acordo com a necessidade
