@@ -4,18 +4,18 @@
 
 Entender as separações por branches
 
-## BRANCHE: **procedimentos**
+### BRANCHE: **procedimentos**
 
 Arquivos de HOW-TO.
 
-## BRANCHE: **arquivos**
+### BRANCHE: **arquivos**
 
 Arquivos utilizados dentro do monitoramento.
 
-## BRANCHE: **zabbix-docker-compose**
+### BRANCHE: **zabbix-docker-compose**
 
 Arquivos para deploy de stack.
 
-## BRANCHE: **zabbix-docker-image**
+### BRANCHE: **zabbix-docker-image**
  
 Arquivos para build de imagens.
