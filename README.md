@@ -2,7 +2,7 @@
 
 #### Descrição
 
-Entender as separações por branches
+Entender as separações por branches.
 
 ### BRANCHE: **procedimentos**
 
