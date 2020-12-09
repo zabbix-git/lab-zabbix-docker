@@ -133,7 +133,7 @@ Aba **Macros**
   - {$MYSQL.USER}: Usuário criado e configurado previamente no MySQL;
   - {$MYSQL.PASSWORD}: Senha do usuário.
   ```
-**Adicionar**
+Botão **Adicionar**
 
 ### **Criação de LLD**
 Após criar o template, acessá-lo e *(Regras de Descoberta > Criar regra de descoberta)*
@@ -152,7 +152,7 @@ Aba **Regra de descoberta**
 - DATABASE_NAME: Nome da base de dados;
 - Por boa prática, utilizar números primos em *Intervalo de atualização* (evitando concorrência).
 
-**Adicionar**
+Botão **Adicionar**
 
 Após criar a regra de descoberta, é preciso criar o protótipo do item. Para isso, acessar o template *(Regras de Descoberta > Protótipos de itens > Criar protótipo de item)*
 
@@ -175,7 +175,7 @@ Aba **Protótipo de item**
 - DATABASE_NAME: Nome da base de dados;
 - Por boa prática, utilizar números primos em *Intervalo de atualização* (evitando concorrência).
 
-**Adicionar**
+Botão **Adicionar**
 
 ### **Criação do Host**
 Acessar *(Configuração > Hosts > Criar host)*
@@ -192,7 +192,7 @@ Aba **Templates**
 
 Por fim, associar o template no host e acompanhar a coleta dos dados.
 
-**Atualizar**
+Botão **Atualizar**
 
 ## **Estruturando Demandas**
 Na maioria dos casos, a existência de uma documentação do device a ser monitorado é essencial.
@@ -259,7 +259,7 @@ Aba **Item**
   **Detalhes**:
   Por boa prática, utilizar números primos em *Intervalo de atualização* (evitando concorrência).
   ```
-**Adicionar**
+Botão **Adicionar**
 
 Seguir com a criação de um novo item, para tratar o retorno do anterior: *(Configuração > Hosts > ZABBIX-SERVER > Itens > Criar item)*
 
@@ -284,7 +284,7 @@ Aba **Pré-processamento**
     - *Saída*: \3
   - *Custom on fail*: Set value to - 0
   ```
-**Adicionar**
+Botão **Adicionar**
 
 ### Criação da trigger
 Acessar o host **Zabbix Server** para criar a trigger: *(Configuração > Hosts > ZABBIX-SERVER > Triggers > Criar trigger)*
@@ -305,7 +305,7 @@ Aba **Etiquetas** - caso seja necessário
   - *Nome*: App
   - *Valor*: YAML
   ```
-**Adicionar**
+Botão **Adicionar**
 
 ## **Monitorando Apache**: *HTTPD*
 
