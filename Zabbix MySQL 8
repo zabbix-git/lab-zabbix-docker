@@ -1,0 +1,53 @@
+#-#-#-#-#- SERVER MYSQL8 -#-#-#-#-#
+#CORRIGIR HORÁRIO
+timedatectl set-timezone America/Sao_Paulo
+    timedatectl status
+
+#SELINUX
+sed -i s/enforcing/disabled/g /etc/selinux/config
+    sestatus
+setenforce 0
+
+#INSTALAR PACOTES ADICIONAIS
+dnf install -y git net-tools vim nano epel-release curl tcpdump traceroute wget telnet
+
+#PACOTE PARA BANCO DE DADOS
+dnf info mysql-server
+dnf -y install mysql-server
+
+#INICIAR E HABILITAR START AUTOMATICO
+systemctl enable --now mysqld
+
+#ALTERAR POLITICAS/PRIVILEGIOS MYSQL
+mysql_secure_installation
+    Y - Politica de senha
+    1 - Level da politica
+    NOVA_SENHA
+    NOVA_SENHA
+    Y - Confirmar nova senha
+    Y - Remover usuarios anonimos
+    Y - Desabilitar Conexão remota
+    Y - Remover base de teste
+    Y - Recarregar tabela de privilegios
+
+#CRIAÇÃO DA DATABASE
+mysql -u root -p
+    create database zabbix character set utf8 collate utf8_bin;
+    flush privileges;
+
+#CRIAÇÃO DE USUÁRIOS REMOTO PARA MYSQL 
+mysql -u root -p
+    create user 'zabbix.server'@'localhost' identified with mysql_native_password by 'MySQL@z4bb1xs3rv3r';
+    create user 'zabbix.frontend'@'localhost' identified with mysql_native_password by 'MySQL@z4bb1xfr0nt3nd';
+    create user 'zabbix.monitor'@'localhost' identified with mysql_native_password by 'MySQL@z4bb1xm0n1t0r';
+    grant all privileges on zabbix.* to 'zabbix.server'@'localhost';
+    grant all privileges on zabbix.* to 'zabbix.frontend'@'localhost';
+    grant all privileges on zabbix.* to 'zabbix.monitor'@'localhost';
+    update mysql.user set Super_Priv='Y' where user='zabbix.server' and host ='localhost';
+    update mysql.user set Super_Priv='Y' where user='zabbix.frontend' and host ='localhost';
+    update mysql.user set Super_Priv='Y' where user='zabbix.monitor' and host ='localhost';
+    flush privileges;
+
+#ADICIONAR REGRA DE FIREWALL - MYSQL
+firewall-cmd --permanent --add-port=3306/tcp
+firewall-cmd --reload
