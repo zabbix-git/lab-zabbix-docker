@@ -17,5 +17,5 @@ Arquivos utilizados dentro do monitoramento.
 Arquivos para deploy de stack.
 
 ### BRANCHE: **zabbix-docker-image**
- 
+
 Arquivos para build de imagens.
