@@ -72,7 +72,7 @@ Validar service:
   docker service ps NOME_DO_SERVICE
   ```
 
-## **Monitorando MySQL (LLD + ODBC)**
+## **Monitorando MySQL - LLD e ODBC**
 
 ### Configurações e validações iniciais
 Para monitorar via ODBC, vamos precisar de um PROXY.
