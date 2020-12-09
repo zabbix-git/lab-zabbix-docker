@@ -122,60 +122,77 @@ Retorno desejado:
 
 ### **Criação do Template**
 Acessar interface Web do Zabbix para criação do Template - *(Configuração > Templates > Criar template)*.
-Aba **Template**
-- *Nome do template*: Template ODBC MySQL;
-- *Grupos*: Templates/Banco de Dados;
 
+Aba **Template**
+  ```
+  - Nome do template: Template ODBC MySQL;
+  - Grupos: Templates/Banco de Dados;
+  ```
 Aba **Macros**
-- *Macros*
-  - **{$MYSQL.USER}**: Usuário criado e configurado previamente no MySQL;
-  - **{$MYSQL.PASSWORD}**: Senha do usuário.
+  ```
+  - {$MYSQL.USER}: Usuário criado e configurado previamente no MySQL;
+  - {$MYSQL.PASSWORD}: Senha do usuário.
+  ```
 **Adicionar**
 
 ### **Criação de LLD**
 Após criar o template, acessá-lo e *(Regras de Descoberta > Criar regra de descoberta)*
+
 Aba **Regra de descoberta**
-- *Nome*: Descoberta de Tabelas
-- *Tipo*: monitoração de banco de dados
-- *Chave*: db.odbc.discovery[discovery.tables.DATABASE_NAME,{HOST.HOST}]
-- *Nome do usuário*: {$MYSQL.USER}
-- *Senha*: {$MYSQL.PASSWORD}
-- *Pesquisa SQL*: SELECT table_name FROM information_schema.tables WHERE table_schema = 'DATABASE_NAME';
-- *Intervalo de atualização*: 31m
+  ```
+  - Nome: Descoberta de Tabelas
+  - Tipo: monitoração de banco de dados
+  - Chave: db.odbc.discovery[discovery.tables.DATABASE_NAME,{HOST.HOST}]
+  - Nome do usuário: {$MYSQL.USER}
+  - Senha: {$MYSQL.PASSWORD}
+  - Pesquisa SQL: SELECT table_name FROM information_schema.tables WHERE table_schema = 'DATABASE_NAME';
+  - Intervalo de atualização: 31m
+  ```
 **Detalhes**:
 - DATABASE_NAME: Nome da base de dados;
 - Por boa prática, utilizar números primos em *Intervalo de atualização* (evitando concorrência).
+
 **Adicionar**
 
 Após criar a regra de descoberta, é preciso criar o protótipo do item. Para isso, acessar o template *(Regras de Descoberta > Protótipos de itens > Criar protótipo de item)*
+
 Aba **Protótipo de item**
-- *Nome*: [{#TABLE_NAME}] Size
-- *Tipo*: monitoração de banco de dados
-- *Chave*: db.odbc.select[{#TABLE_NAME}.size,{HOST.HOST}]
-- *Nome do usuário*: {$MYSQL.USER}
-- *Senha*: {$MYSQL.PASSWORD}
-- *Pesquisa SQL*: SELECT round((data_length + index_length) / 1024) as 'size' FROM information_schema.tables WHERE table_schema = 'DATABASE_NAME' AND table_name = '{#TABLE_NAME}';
-- *Intervalo de atualização*: 7m
-- *Tipo de informação*: Numérico (fracionário)
-- *Unidades*: B
-- *Período de retenção do histórico*: De acordo com a necessidade
-- *Período de retenção das estatísticas*: De acordo com a necessidade
-- *Novo protótipo de aplicação*: [{#TABLE_NAME}]
+  ```
+  - Nome: [{#TABLE_NAME}] Size
+  - Tipo: monitoração de banco de dados
+  - Chave: db.odbc.select[{#TABLE_NAME}.size,{HOST.HOST}]
+  - Nome do usuário: {$MYSQL.USER}
+  - Senha: {$MYSQL.PASSWORD}
+  - Pesquisa SQL: SELECT round((data_length + index_length) / 1024) as 'size' FROM information_schema.tables WHERE table_schema = 'DATABASE_NAME' AND table_name = '{#TABLE_NAME}';
+  - Intervalo de atualização: 7m
+  - Tipo de informação: Numérico (fracionário)
+  - Unidades: B
+  - Período de retenção do histórico: De acordo com a necessidade
+  - Período de retenção das estatísticas: De acordo com a necessidade
+  - Novo protótipo de aplicação: [{#TABLE_NAME}]
+  ```
 **Detalhes**:
 - DATABASE_NAME: Nome da base de dados;
 - Por boa prática, utilizar números primos em *Intervalo de atualização* (evitando concorrência).
+
 **Adicionar**
 
 ### **Criação do Host**
 Acessar *(Configuração > Hosts > Criar host)*
+
 Aba **Host**
-- *Nome do host*: DSN_NAME
-- *Nome Visível*: Caso queira alterar
-- *Grupos*: Banco de Dados
-- *Monitorado por proxy*: Selecionar o proxy onde as configurações iniciais foram realizadas
+  ```
+  - *Nome do host*: DSN_NAME
+  - *Nome Visível*: Caso queira alterar
+  - *Grupos*: Banco de Dados
+  - *Monitorado por proxy*: Selecionar o proxy onde as configurações iniciais foram realizadas
+  ```
 
 Aba **Templates**
+
 Por fim, associar o template no host e acompanhar a coleta dos dados.
+
+**Atualizar**
 
 ## **Estruturando Demandas**
 Na maioria dos casos, a existência de uma documentação do device a ser monitorado é essencial.
@@ -228,53 +245,66 @@ Criação do arquivo YAML no **Zabbix Server** em */tmp/app.yaml*, com o conteú
   ```
 
 ### Criação dos itens
-Aba **Item**
 Acessar o host **Zabbix Server** para criar o item de coleta: *(Configuração > Hosts > ZABBIX-SERVER > Itens > Criar item)*
-- *Nome*: App YAML
-- *Tipo*: Agente Zabbix (ativo)
-- *Chave*: vfs.file.contents[/tmp/app.yaml]
-- *Tipo de informação*: Texto
-- *Intervalo de atualização*: 3m
-- *Período de retenção do histórico*: De acordo com a necessidade
-- *Novo aplicação*: YAML
-**Detalhes**:
-- Por boa prática, utilizar números primos em *Intervalo de atualização* (evitando concorrência).
+
+Aba **Item**
+  ```
+  - *Nome*: App YAML
+  - *Tipo*: Agente Zabbix (ativo)
+  - *Chave*: vfs.file.contents[/tmp/app.yaml]
+  - *Tipo de informação*: Texto
+  - *Intervalo de atualização*: 3m
+  - *Período de retenção do histórico*: De acordo com a necessidade
+  - *Novo aplicação*: YAML
+  **Detalhes**:
+  Por boa prática, utilizar números primos em *Intervalo de atualização* (evitando concorrência).
+  ```
 **Adicionar**
 
 Seguir com a criação de um novo item, para tratar o retorno do anterior: *(Configuração > Hosts > ZABBIX-SERVER > Itens > Criar item)*
+
 Aba **Item**
-- *Nome*: App status
-- *Tipo*: Item dependente
-- *Chave*: vfs.file.contents[/tmp/app.yaml]
-- *Item mestre*: Selecionar o item criado anteriormente
-- *Tipo de informação*: Texto
-- *Período de retenção do histórico*: De acordo com a necessidade
-- *Novo aplicação*: YAML
+  ```
+  - *Nome*: App status
+  - *Tipo*: Item dependente
+  - *Chave*: vfs.file.contents[/tmp/app.yaml]
+  - *Item mestre*: Selecionar o item criado anteriormente
+  - *Tipo de informação*: Texto
+  - *Período de retenção do histórico*: De acordo com a necessidade
+  - *Novo aplicação*: YAML
+  ```
 **Detalhes**:
-- Por boa prática, utilizar números primos em *Intervalo de atualização* (evitando concorrência).
+Por boa prática, utilizar números primos em *Intervalo de atualização* (evitando concorrência).
 
 Aba **Pré-processamento**
-- *Nome*: Selecionar *Expressão regular*
-- *Parâmetros*
-  - *Padrão*: (\: )(')(.*)(')
-  - *Saída*: \3
-- *Custom on fail*: Set value to - 0
+  ```
+  - *Nome*: Selecionar *Expressão regular*
+  - *Parâmetros*
+    - *Padrão*: (\: )(')(.*)(')
+    - *Saída*: \3
+  - *Custom on fail*: Set value to - 0
+  ```
 **Adicionar**
 
 ### Criação da trigger
 Acessar o host **Zabbix Server** para criar a trigger: *(Configuração > Hosts > ZABBIX-SERVER > Triggers > Criar trigger)*
+
 Aba **Trigger**
-- *Nome*: Definir como irá aparecer o alerta
-- *Severidade*: Definir de acordo com o cenário
-- *Expressão*: {ZABBIX-SERVER:app.status.str(OK)}=0
-- *Geração de eventos OK*: Depende do cenário
-- *Modo de geração de eventos de INCIDENTE*: Depende do cenário
-- *Fechamentos de eventos OK*: Depende do cenário
-- *Permitir fechamento manual*: Depende do cenário
+  ```
+  - *Nome*: Definir como irá aparecer o alerta
+  - *Severidade*: Definir de acordo com o cenário
+  - *Expressão*: {ZABBIX-SERVER:app.status.str(OK)}=0
+  - *Geração de eventos OK*: Depende do cenário
+  - *Modo de geração de eventos de INCIDENTE*: Depende do cenário
+  - *Fechamentos de eventos OK*: Depende do cenário
+  - *Permitir fechamento manual*: Depende do cenário
+  ```
 
 Aba **Etiquetas** - caso seja necessário
-- *Nome*: App
-- *Valor*: YAML
+  ```
+  - *Nome*: App
+  - *Valor*: YAML
+  ```
 **Adicionar**
 
 ## **Monitorando Apache**: *HTTPD*
