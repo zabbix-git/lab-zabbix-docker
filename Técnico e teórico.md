@@ -182,10 +182,10 @@ Acessar *(Configuração > Hosts > Criar host)*
 
 Aba **Host**
   ```
-  - *Nome do host*: DSN_NAME
-  - *Nome Visível*: Caso queira alterar
-  - *Grupos*: Banco de Dados
-  - *Monitorado por proxy*: Selecionar o proxy onde as configurações iniciais foram realizadas
+  - Nome do host: DSN_NAME
+  - Nome Visível: Caso queira alterar
+  - Grupos: Banco de Dados
+  - Monitorado por proxy: Selecionar o proxy onde as configurações iniciais foram realizadas
   ```
 
 Aba **Templates**
@@ -249,13 +249,13 @@ Acessar o host **Zabbix Server** para criar o item de coleta: *(Configuração >
 
 Aba **Item**
   ```
-  - *Nome*: App YAML
-  - *Tipo*: Agente Zabbix (ativo)
-  - *Chave*: vfs.file.contents[/tmp/app.yaml]
-  - *Tipo de informação*: Texto
-  - *Intervalo de atualização*: 3m
-  - *Período de retenção do histórico*: De acordo com a necessidade
-  - *Novo aplicação*: YAML
+  - Nome: App YAML
+  - Tipo: Agente Zabbix (ativo)
+  - Chave: vfs.file.contents[/tmp/app.yaml]
+  - Tipo de informação: Texto
+  - Intervalo de atualização: 3m
+  - Período de retenção do histórico: De acordo com a necessidade
+  - Novo aplicação: YAML
   **Detalhes**:
   Por boa prática, utilizar números primos em *Intervalo de atualização* (evitando concorrência).
   ```
@@ -265,24 +265,24 @@ Seguir com a criação de um novo item, para tratar o retorno do anterior: *(Con
 
 Aba **Item**
   ```
-  - *Nome*: App status
-  - *Tipo*: Item dependente
-  - *Chave*: vfs.file.contents[/tmp/app.yaml]
-  - *Item mestre*: Selecionar o item criado anteriormente
-  - *Tipo de informação*: Texto
-  - *Período de retenção do histórico*: De acordo com a necessidade
-  - *Novo aplicação*: YAML
+  - Nome: App status
+  - Tipo: Item dependente
+  - Chave: vfs.file.contents[/tmp/app.yaml]
+  - Item mestre: Selecionar o item criado anteriormente
+  - Tipo de informação: Texto
+  - Período de retenção do histórico: De acordo com a necessidade
+  - Novo aplicação: YAML
   ```
 **Detalhes**:
 Por boa prática, utilizar números primos em *Intervalo de atualização* (evitando concorrência).
 
 Aba **Pré-processamento**
   ```
-  - *Nome*: Selecionar *Expressão regular*
-  - *Parâmetros*
-    - *Padrão*: (\: )(')(.*)(')
-    - *Saída*: \3
-  - *Custom on fail*: Set value to - 0
+  - Nome: Selecionar Expressão regular
+  - Parâmetros
+    - Padrão: (\: )(')(.*)(')
+    - Saída: \3
+  - Custom on fail: Set value to - 0
   ```
 Botão **Adicionar**
 
@@ -291,19 +291,19 @@ Acessar o host **Zabbix Server** para criar a trigger: *(Configuração > Hosts 
 
 Aba **Trigger**
   ```
-  - *Nome*: Definir como irá aparecer o alerta
-  - *Severidade*: Definir de acordo com o cenário
-  - *Expressão*: {ZABBIX-SERVER:app.status.str(OK)}=0
-  - *Geração de eventos OK*: Depende do cenário
-  - *Modo de geração de eventos de INCIDENTE*: Depende do cenário
-  - *Fechamentos de eventos OK*: Depende do cenário
-  - *Permitir fechamento manual*: Depende do cenário
+  - Nome: Definir como irá aparecer o alerta
+  - Severidade: Definir de acordo com o cenário
+  - Expressão: {ZABBIX-SERVER:app.status.str(OK)}=0
+  - Geração de eventos OK: Depende do cenário
+  - Modo de geração de eventos de INCIDENTE: Depende do cenário
+  - Fechamentos de eventos OK: Depende do cenário
+  - Permitir fechamento manual: Depende do cenário
   ```
 
 Aba **Etiquetas** - caso seja necessário
   ```
-  - *Nome*: App
-  - *Valor*: YAML
+  - Nome: App
+  - Valor: YAML
   ```
 Botão **Adicionar**
 
