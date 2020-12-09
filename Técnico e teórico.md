@@ -11,7 +11,7 @@ Documento referente aos procedimentos técnicos e teóricos executados no desafi
   - [1.2 Pollers: Zabbix Server](#pollers-zabbix-server)
   - [1.3 Feature: Alertscripts - Telegram](#feature-alertscripts-telegram)
   - [1.4 Deploy Swarm](#deploy-swarm)
-- [2 Monitorando MySQL - LLD e ODBC](#monitorando-mysql-lld-e-odbc)
+- [2 Monitorando MySQL com ODBC e LLD](#monitorando-mysql-com-odbc-e-lld)
   - [2.1 Configurações e validações iniciais](#configurações-e-validações-iniciais)
   - [2.2 Criação do Template](#criação-do-template)
   - [2.3 Criação de LLD](#criação-de-lld)
@@ -72,7 +72,7 @@ Validar service:
   docker service ps NOME_DO_SERVICE
   ```
 
-## **Monitorando MySQL - LLD e ODBC**
+## **Monitorando MySQL com ODBC e LLD**
 
 ### Configurações e validações iniciais
 Para monitorar via ODBC, vamos precisar de um PROXY.
