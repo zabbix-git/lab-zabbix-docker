@@ -7,8 +7,8 @@ Documento referente aos procedimentos técnicos e teóricos executados no desafi
 ## Sumario
 
 - [1 Customizar Dockerfile](#customizar-dockerfile)
-  - [1.1 Healthcheck: Zabbix Frontend]
-  - [1.2 Pollers: Zabbix Server]
+  - [1.1 Healthcheck: Zabbix Frontend](#healthcheck-zabbix-frontend)
+  - [1.2 Pollers: Zabbix Server](#pollers-zabbix-server)
   - [1.3 Feature: Alertscripts - Telegram]
   - [1.4 Deploy Swarm]
 - [2 Monitorando MySQL (LLD + ODBC)]
