@@ -2,7 +2,7 @@
 
 import telebot,sys
 
-BOT_TOKEN='DEFINIR TOKEN'
+BOT_TOKEN='DEFINIR_TOKEN'
 DESTINATION=sys.argv[1]
 SUBJECT=sys.argv[2]
 MESSAGE=sys.argv[3]
