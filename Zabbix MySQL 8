@@ -37,15 +37,15 @@ mysql -u root -p
 
 #CRIAÇÃO DE USUÁRIOS REMOTO PARA MYSQL 
 mysql -u root -p
-    create user 'zabbix.server'@'localhost' identified with mysql_native_password by 'DEFINIR_SENHA';
-    create user 'zabbix.frontend'@'localhost' identified with mysql_native_password by 'DEFINIR_SENHA';
-    create user 'zabbix.monitor'@'localhost' identified with mysql_native_password by 'DEFINIR_SENHA';
-    grant all privileges on zabbix.* to 'zabbix.server'@'localhost';
-    grant all privileges on zabbix.* to 'zabbix.frontend'@'localhost';
-    grant all privileges on zabbix.* to 'zabbix.monitor'@'localhost';
-    update mysql.user set Super_Priv='Y' where user='zabbix.server' and host ='localhost';
-    update mysql.user set Super_Priv='Y' where user='zabbix.frontend' and host ='localhost';
-    update mysql.user set Super_Priv='Y' where user='zabbix.monitor' and host ='localhost';
+    create user 'zabbix.server'@'%' identified with mysql_native_password by 'DEFINIR_SENHA';
+    create user 'zabbix.frontend'@'%' identified with mysql_native_password by 'DEFINIR_SENHA';
+    create user 'zabbix.monitor'@'%' identified with mysql_native_password by 'DEFINIR_SENHA';
+    grant all privileges on zabbix.* to 'zabbix.server'@'%';
+    grant all privileges on zabbix.* to 'zabbix.frontend'@'%';
+    grant all privileges on zabbix.* to 'zabbix.monitor'@'%';
+    update mysql.user set Super_Priv='Y' where user='zabbix.server';
+    update mysql.user set Super_Priv='Y' where user='zabbix.frontend';
+    update mysql.user set Super_Priv='Y' where user='zabbix.monitor';
     flush privileges;
 
 #ADICIONAR REGRA DE FIREWALL - MYSQL
