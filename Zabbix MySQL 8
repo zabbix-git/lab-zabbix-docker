@@ -37,9 +37,9 @@ mysql -u root -p
 
 #CRIAÇÃO DE USUÁRIOS REMOTO PARA MYSQL 
 mysql -u root -p
-    create user 'zabbix.server'@'localhost' identified with mysql_native_password by 'MySQL@z4bb1xs3rv3r';
-    create user 'zabbix.frontend'@'localhost' identified with mysql_native_password by 'MySQL@z4bb1xfr0nt3nd';
-    create user 'zabbix.monitor'@'localhost' identified with mysql_native_password by 'MySQL@z4bb1xm0n1t0r';
+    create user 'zabbix.server'@'localhost' identified with mysql_native_password by 'DEFINIR_SENHA';
+    create user 'zabbix.frontend'@'localhost' identified with mysql_native_password by 'DEFINIR_SENHA';
+    create user 'zabbix.monitor'@'localhost' identified with mysql_native_password by 'DEFINIR_SENHA';
     grant all privileges on zabbix.* to 'zabbix.server'@'localhost';
     grant all privileges on zabbix.* to 'zabbix.frontend'@'localhost';
     grant all privileges on zabbix.* to 'zabbix.monitor'@'localhost';
