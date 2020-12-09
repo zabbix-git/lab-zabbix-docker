@@ -6,27 +6,27 @@ Documento referente aos procedimentos técnicos e teóricos executados no desafi
 
 ## Sumario
 
-- [1 Customizar Dockerfile]
+- [1 Customizar Dockerfile](#customizar-dockerfile)
   - [1.1 Healthcheck: Zabbix Frontend]
   - [1.2 Pollers: Zabbix Server]
   - [1.3 Feature: Alertscripts - Telegram]
   - [1.4 Deploy Swarm]
 - [2 Monitorando MySQL (LLD + ODBC)]
-
+  - [2.1 Configurações e validações iniciais]
+  - [2.2 Criação do Template]
+  - [2.3 Criação de LLD]
+  - [2.4 Criação do Host]
 - [3 Estruturando Demandas]
-
 - [4 Aplicação WEB]
   - [4.1 Frontend]
   - [4.2 Backend]
   - [4.3 Banco de Dados]
 - [5 Monitorando YAML]
-
 - [6 Monitorando Apache HTTPD]
 
-## **Customizar Dockerfile Zabbix 5.2**
+## **Customizar Dockerfile**
   
 ### **Healthcheck**: *Zabbix Frontend*
-
 Inserir no arquivo *Dockerfile* do **Zabbix Frontend**:
   ```
   #HEALTHCHECK - ZABBIX-FRONTEND
@@ -35,7 +35,6 @@ Inserir no arquivo *Dockerfile* do **Zabbix Frontend**:
   ```
 
 ### **Pollers**: *Zabbix Server*
-
 Inserir no arquivo *Dockerfile* do **Zabbix Server**:
   ```
   ENV ZBX_STARTPOLLERS=5
@@ -52,18 +51,16 @@ Inserir no arquivo *Dockerfile* do **Zabbix Server**:
   ```
 
 ### **Feature**: *Alertscripts Telegram*
-
 - No Telegram, procurar pelo @BotFather, iniciar conversa, criar **BOT** (/newbot) e configurá-lo (será retornado o *TOKEN*);
 - Iniciar conversa com o **BOT** criado e mandar qualquer mensagem;
-- Inserir script *"telegram.py"* no diretório *"/usr/lib/zabbix/alertscripts"* com **permissão de execução**; 
+- Inserir script *"telegram.py"* no diretório do **zabbix server** *"/usr/lib/zabbix/alertscripts"* com **permissão de execução**; 
 - Com o *TOKEN* retornado, inserir na variável **BOT_TOKEN=** do script *"telegram.py"*;
-- Acessar https://api.telegram.org/bot*TOKEN*/getUpdates e identificar ID do usuário que enviou mensagem;
+- Acessar "api.telegram.org/bot*TOKEN*/getUpdates" e identificar ID do usuário que enviou mensagem;
 - Configurar mídia de usuário com o ID;
 - Definir qual cenário para execução da ação (envio de mensagem via Telegram).
 
 ### **Deploy Swarm**
-
-Baseando-se nos arquivos do *"zabbix-git/zabbix-docker"*, executar:
+Baseando-se nos arquivos da branche *"zabbix-docker-compose/docker-compose"*, executar:
 
 Iniciar service:
   ```
@@ -76,6 +73,8 @@ Validar service:
   ```
 
 ## **Monitorando MySQL (LLD + ODBC)**
+
+### Configurações e validações iniciais
 Para monitorar via ODBC, vamos precisar de um PROXY.
 Após as configurações iniciais e validação do funcionamento do serviço Zabbix Proxy, precisamos instalar alguns pacotes adicionais:
 - unixODBC, unixODBC-devel e o mysql-connector-odbc;
